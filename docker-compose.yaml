@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    container_name: ravApp-api
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - ./ravApp:/app
+
+  db:
+    container_name: ravApp-db
+    image: postgres:15.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ravApp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    name: "ravApp-database"
