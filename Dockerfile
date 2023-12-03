@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY ./poetry.lock .
 COPY ./pyproject.toml .
+RUN mkdir downloads
 
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
