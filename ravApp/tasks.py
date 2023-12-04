@@ -4,13 +4,9 @@ from django.conf import settings
 import os
 
 
-REDIS_HOST = os.getenv("REDIS_HOST")
-REDIS_PORT = os.getenv("REDIS_PORT")
-
-import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ravApp.settings")
 
-app = Celery('tasks', broker=f"redis://{REDIS_HOST}:{REDIS_PORT}")
+app = Celery('tasks', broker=settings.CELERY_BROKER_URL)
 
 app.conf.beat_schedule = {
     'backup-every-hour': {
