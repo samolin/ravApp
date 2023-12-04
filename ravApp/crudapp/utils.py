@@ -10,6 +10,6 @@ async def download_large_file(url):
                 with open(downloads_folder + file_name, 'wb') as file:
                     async for chunk in response.aiter_bytes():
                         file.write(chunk)
-                return f'Файл {file_name} успешно загрежен'
+                return f'Файл {file_name} успешно загружен'
             else:
                 return f"Ошибка при загрузке файла, статус: {response.status_code}"
