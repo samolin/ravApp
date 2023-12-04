@@ -14,9 +14,22 @@ services:
     volumes:
       - ./ravApp:/app
 
+  celery_worker:
+    build: .
+    container_name: ravApp-celery-worker
+    command: sh -c "apt-get update && apt-get install -y postgresql-client && celery -A tasks worker -B --loglevel=info"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://${REDIS_HOST}:${REDIS_PORT}/0
+    volumes:
+      - database_backups:/backups
+
   db:
     container_name: ravApp-db
-    image: postgres:15.1-alpine
+    image: postgres:13.1-alpine
     restart: always
     environment:
       POSTGRES_DB: ravApp
@@ -29,6 +42,21 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    container_name: ravApp-redis
+    image: redislabs/rejson:2.2.0
+    restart: always
+    volumes:
+      - redis_data:/data
+    ports:
+      - "${REDIS_PORT}:6379"
+    env_file:
+      - .env
+
 volumes:
   postgres_data:
     name: "ravApp-database"
+  redis_data:
+    name: "ravApp-redis"
+  database_backups:
+    name: "ravApp-backup"
