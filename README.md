@@ -24,11 +24,11 @@ git clone https://github.com/samolin/ravApp
 cd ravApp
 make up
 ```
-#### Stop containers
+## Stop containers
 ```sh
 make stop
 ```
-#### Test app
+## Test app
 ```sh
 poetry install --with tests
 make tests
