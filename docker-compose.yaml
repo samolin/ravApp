@@ -17,7 +17,7 @@ services:
   celery_worker:
     build: .
     container_name: ravApp-celery-worker
-    command: sh -c "apt-get update && apt-get install -y postgresql-client && celery -A tasks worker -B --loglevel=info"
+    command: sh -c "apt-get update && apt-get install -y postgresql-client && celery -A celery_backup.tasks worker -B --loglevel=info"
     env_file:
       - .env
     depends_on:

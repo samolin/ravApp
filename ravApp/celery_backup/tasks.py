@@ -10,7 +10,7 @@ app = Celery('tasks', broker=settings.CELERY_BROKER_URL)
 
 app.conf.beat_schedule = {
     'backup-every-hour': {
-        'task': 'tasks.backup_data',
+        'task': 'celery_backup.tasks.backup_data',
         'schedule': timedelta(seconds=60*60*12) # каждые 12 часов
     },
 }

@@ -16,7 +16,11 @@ djangorestframework-simplejwt = "^5.3.0"
 celery = "^5.3.6"
 redis = "^5.0.1"
 django-celery-beat = "^2.5.0"
+fakeredis = "^2.20.0"
 
+
+[tool.poetry.group.tests.dependencies]
+pytest-django = "^4.7.0"
 
 [build-system]
 requires = ["poetry-core"]
